@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using LethalProgression.Config;
+using System.Globalization;
 
 namespace LethalProgression.Skills
 {
@@ -44,7 +45,7 @@ namespace LethalProgression.Skills
         {
             if (!skills.ContainsKey(upgrade))
             {
-                Debug.LogError("Skill " + upgrade.ToString() + " is not in the skill list!");
+                LethalPlugin.Log.LogInfo("Skill " + upgrade.ToString() + " is not in the skill list!");
                 return false;
             }
 
@@ -55,6 +56,7 @@ namespace LethalProgression.Skills
         {
             if (bool.Parse(SkillConfig.hostConfig["Health Regen Enabled"]))
             {
+                LethalPlugin.Log.LogInfo("HP Regen check 1");
                 CreateSkill(UpgradeType.HPRegen,
                     "Health Regen",
                     "Your body heals itself faster, allowing you to recover from injuries quicker. Only regenerate up to 100 HP.",
@@ -63,7 +65,7 @@ namespace LethalProgression.Skills
                     UpgradeType.HPRegen,
                     1,
                     int.Parse(SkillConfig.hostConfig["Health Regen Max Level"]),
-                    float.Parse(SkillConfig.hostConfig["Health Regen Multiplier"]));
+                    float.Parse(SkillConfig.hostConfig["Health Regen Multiplier"], CultureInfo.InvariantCulture));
             }
 
             if (bool.Parse(SkillConfig.hostConfig["Stamina Enabled"]))
@@ -76,7 +78,7 @@ namespace LethalProgression.Skills
                     UpgradeType.Stamina,
                     1,
                     int.Parse(SkillConfig.hostConfig["Stamina Max Level"]),
-                    float.Parse(SkillConfig.hostConfig["Stamina Multiplier"]),
+                    float.Parse(SkillConfig.hostConfig["Stamina Multiplier"], CultureInfo.InvariantCulture),
                     Stamina.StaminaUpdate);
             }
 
@@ -90,7 +92,7 @@ namespace LethalProgression.Skills
                     UpgradeType.Battery,
                     1,
                     int.Parse(SkillConfig.hostConfig["Battery Life Max Level"]),
-                    float.Parse(SkillConfig.hostConfig["Battery Life Multiplier"]));
+                    float.Parse(SkillConfig.hostConfig["Battery Life Multiplier"], CultureInfo.InvariantCulture));
             }
 
             if (bool.Parse(SkillConfig.hostConfig["Hand Slots Enabled"]) && !LethalPlugin.ReservedSlots)
@@ -103,7 +105,7 @@ namespace LethalProgression.Skills
                      UpgradeType.HandSlot,
                      1,
                      int.Parse(SkillConfig.hostConfig["Hand Slots Max Level"]),
-                     float.Parse(SkillConfig.hostConfig["Hand Slots Multiplier"]),
+                     float.Parse(SkillConfig.hostConfig["Hand Slots Multiplier"], CultureInfo.InvariantCulture),
                      HandSlots.HandSlotsUpdate);
             }
 
@@ -117,7 +119,7 @@ namespace LethalProgression.Skills
                     UpgradeType.Value,
                     1,
                     int.Parse(SkillConfig.hostConfig["Loot Value Max Level"]),
-                    float.Parse(SkillConfig.hostConfig["Loot Value Multiplier"]),
+                    float.Parse(SkillConfig.hostConfig["Loot Value Multiplier"], CultureInfo.InvariantCulture),
                     LootValue.LootValueUpdate);
             }
 
@@ -131,7 +133,7 @@ namespace LethalProgression.Skills
                     UpgradeType.Oxygen,
                     1,
                     int.Parse(SkillConfig.hostConfig["Oxygen Max Level"]),
-                    float.Parse(SkillConfig.hostConfig["Oxygen Multiplier"]));
+                    float.Parse(SkillConfig.hostConfig["Oxygen Multiplier"], CultureInfo.InvariantCulture));
             }
         }
     }

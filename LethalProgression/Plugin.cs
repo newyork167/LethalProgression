@@ -20,12 +20,12 @@ using Unity.Netcode;
 
 namespace LethalProgression
 {
-    [BepInPlugin("Stoneman.LethalProgression", "Lethal Progression", "1.2.0")]
+    [BepInPlugin("Stoneman.LethalProgression", "Lethal Progression", "1.3.1")]
     internal class LethalPlugin : BaseUnityPlugin
     {
         private const string modGUID = "Stoneman.LethalProgression";
         private const string modName = "Lethal Progression";
-        private const string modVersion = "1.2.0";
+        private const string modVersion = "1.3.1";
         private const string modAuthor = "Stoneman";
 
         // Make a public AssetBundle
@@ -53,6 +53,24 @@ namespace LethalProgression
                 if (plugin.Value.Metadata.GUID.IndexOf("ReservedItem") >= 0)
                 {
                     ReservedSlots = true;
+                }
+
+                if (plugin.Value.Metadata.GUID.IndexOf("mikestweaks") >= 0)
+                {
+                    // Get "ExtraItemSlots" config entry from Mike's Tweaks
+                    ConfigEntryBase[] mikesEntries = plugin.Value.Instance.Config.GetConfigEntries();
+
+                    foreach (var entry in mikesEntries)
+                    {
+                        if (entry.Definition.Key == "ExtraItemSlots")
+                        {
+                            if (int.Parse(entry.GetSerializedValue()) > 0)
+                            {
+                                ReservedSlots = true;
+                            }
+                            break;
+                        }
+                    }
                 }
             }
 
