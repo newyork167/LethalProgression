@@ -90,6 +90,28 @@ namespace LethalProgression.Config
             //
             LethalPlugin.Instance.BindConfig<bool>(
                 "Skills",
+                "Strength Enabled",
+                true,
+                "Enable the Strength skill?"
+            );
+
+            LethalPlugin.Instance.BindConfig<int>(
+                "Skills",
+                "Strength Max Level",
+                99999,
+                "Maximum level for the Strength."
+            );
+
+            LethalPlugin.Instance.BindConfig<float>(
+                "Skills",
+                "Strength Multiplier",
+                2,
+                "How much does the Strength skill increase per level?"
+            );
+
+            //
+            LethalPlugin.Instance.BindConfig<bool>(
+                "Skills",
                 "Battery Life Enabled",
                 true,
                 "Enable the Battery Life skill?"

@@ -17,6 +17,7 @@ namespace LethalProgression.Skills
         HandSlot,
         Value,
         Oxygen,
+        Strength
     }
 
     internal class SkillList
