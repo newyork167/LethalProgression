@@ -82,6 +82,20 @@ namespace LethalProgression.Skills
                     Stamina.StaminaUpdate);
             }
 
+            if (bool.Parse(SkillConfig.hostConfig["Strength Enabled"]))
+            {
+                CreateSkill(UpgradeType.Strength,
+                    "Strength",
+                    "The company gives you neurofiber implants, allowing you to carry heavier loads and hurt more.",
+                    "STR",
+                    "Strength",
+                    UpgradeType.Strength,
+                    1,
+                    int.Parse(SkillConfig.hostConfig["Strength Max Level"]),
+                    float.Parse(SkillConfig.hostConfig["Strength Multiplier"], CultureInfo.InvariantCulture),
+                    Strength.StrengthUpdate);
+            }
+
             if (bool.Parse(SkillConfig.hostConfig["Battery Life Enabled"]))
             {
                 CreateSkill(UpgradeType.Battery,

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace LethalProgression.Patches
@@ -33,12 +34,26 @@ namespace LethalProgression.Patches
             { "Puffer (EnemyType)", 15 },
         };
 
-        //[HarmonyPostfix]
-        //[HarmonyPatch(typeof(HUDManager), "PingScan_performed")]
-        //private static void DebugScan()
-        //{
-        //    LethalProgression.XPHandler.xpInstance.AddXPServerRPC(10);
-        //}
+        // [HarmonyPostfix]
+        // [HarmonyPatch(typeof(HUDManager), "PingScan_performed")]
+        // private static bool DebugScan()
+        // {
+        //     LP_NetworkManager.xpInstance.AddXPServerRPC(10);
+        //     
+        //     return true;
+        // }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(HUDManager), "PingScan_performed")]
+        private static void OnScan(HUDManager __instance, InputAction.CallbackContext context)
+        {
+            GameObject ship = GameObject.Find("/Environment/HangarShip");
+            Console.WriteLine($"Ship position: {ship.transform.position}");
+            foreach (var component in ship.gameObject.GetComponents(typeof(GameObject)))
+            {
+                Console.WriteLine($"Component: {component}");
+            }
+        }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(HUDManager), "AddNewScrapFoundToDisplay")]
@@ -53,6 +68,7 @@ namespace LethalProgression.Patches
             // Give XP for the amount of money this scrap costs.
             LP_NetworkManager.xpInstance.AddXPServerRPC(scrapCost);
         }
+        
         [HarmonyPostfix]
         [HarmonyPatch(typeof(EnemyAI), "KillEnemy")]
         private static void GiveXPForKill(EnemyAI __instance)
@@ -67,6 +83,7 @@ namespace LethalProgression.Patches
             }
             LP_NetworkManager.xpInstance.AddXPServerRPC(enemyReward);
         }
+        
         public static void ShowXPUpdate(int oldXP, int newXP, int xp)
         {
             // Makes one if it doesn't exist on screen yet.
@@ -151,10 +168,10 @@ namespace LethalProgression.Patches
             GameObject _xpBarProfit = GameObject.Find("/Systems/UI/Canvas/IngamePlayerHUD/BottomMiddle/XPUpdate/XPProfit");
             GameObject.Destroy(_xpBarProfit);
 
-            _tempBar.transform.Translate(3.1f, -2.1f, 0f);
+            _tempBar.transform.Translate(13.1f, -2.1f, 0f);
             Vector3 localPos = _tempBar.transform.localPosition;
 
-            _tempBar.transform.localPosition = new Vector3(localPos.x, localPos.y + 5f, localPos.z);
+            _tempBar.transform.localPosition = new Vector3(localPos.x, localPos.y, localPos.z);
 
             _tempBar.SetActive(false);
         }

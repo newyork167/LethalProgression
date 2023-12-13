@@ -96,6 +96,6 @@
     </Target>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Exec Command="pwsh $(SolutionDir)/scripts/copy_to_thunderstore.ps1" />
+        <Exec Command="pwsh $(SolutionDir)/scripts/copy_to_thunderstore.ps1 $(SolutionDir)" />
     </Target>
 </Project>
