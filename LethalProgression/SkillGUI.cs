@@ -33,7 +33,7 @@ namespace LethalProgression.GUI
             if (isMenuOpen)
             {
 
-                if (bool.Parse(SkillConfig.hostConfig["Unspec in Ship Only"]))
+                if (bool.Parse(SkillConfig.hostConfig["Unspec in Ship Only"]) && !bool.Parse(SkillConfig.hostConfig["Disable Unspec"]))
                 {
                     // Check if you are in the ship right now
                     if (GameNetworkManager.Instance.localPlayerController.isInHangarShipRoom)
@@ -45,21 +45,12 @@ namespace LethalProgression.GUI
                         guiInstance.SetUnspec(false);
                     }
                 }
-                GameObject scrollRect = guiInstance.mainPanel.transform.GetChild(3).gameObject;
-                if (scrollRect.GetComponent<ScrollRect>().verticalNormalizedPosition >= 0.95f) // Scrolled near end
+
+                if (bool.Parse(SkillConfig.hostConfig["Disable Unspec"]))
                 {
-                    guiInstance.mainPanel.transform.GetChild(4).gameObject.SetActive(true);
-                    guiInstance.mainPanel.transform.GetChild(5).gameObject.SetActive(false);
+                    guiInstance.SetUnspec(false);
                 }
-                else if (scrollRect.GetComponent<ScrollRect>().verticalNormalizedPosition <= 0.05f) // At the top
-                {
-                    guiInstance.mainPanel.transform.GetChild(4).gameObject.SetActive(false);
-                    guiInstance.mainPanel.transform.GetChild(5).gameObject.SetActive(true);
-                }
-                else
-                {
-                    guiInstance.mainPanel.transform.GetChild(4).gameObject.SetActive(false);
-                }
+
                 // Get mouse position.
                 Vector2 mousePos = Mouse.current.position.ReadValue();
                 // If the mouse is currently on the PointsPanel
@@ -148,7 +139,7 @@ namespace LethalProgression.GUI
             infoPanel = mainPanel.transform.GetChild(1).gameObject;
             infoPanel.SetActive(false);
 
-            GameObject backButton = mainPanel.transform.GetChild(6).gameObject;
+            GameObject backButton = mainPanel.transform.GetChild(4).gameObject;
             backButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();
             backButton.GetComponent<Button>().onClick.AddListener(BackButton);
 
@@ -194,8 +185,12 @@ namespace LethalProgression.GUI
             minusFive.SetActive(show);
             minusTwo.SetActive(show);
             minusOne.SetActive(show);
-            GameObject unSpecHelpText = infoPanel.transform.GetChild(9).gameObject;
-            unSpecHelpText.SetActive(!show);
+
+            if (!bool.Parse(SkillConfig.hostConfig["Disable Unspec"]))
+            {
+                GameObject unSpecHelpText = infoPanel.transform.GetChild(9).gameObject;
+                unSpecHelpText.SetActive(!show);
+            }
         }
         public GameObject SetupUpgradeButton(LethalProgression.Skills.Skill skill)
         {
@@ -211,7 +206,7 @@ namespace LethalProgression.GUI
             button.name = skill.GetShortName();
 
             GameObject skillScroller = mainPanel.transform.GetChild(3).gameObject;
-            GameObject skillContents = skillScroller.transform.GetChild(0).gameObject;
+            GameObject skillContents = skillScroller.transform.GetChild(1).gameObject;
             button.transform.SetParent(skillContents.transform, false);
 
             shownSkills++;
@@ -267,7 +262,7 @@ namespace LethalProgression.GUI
             {
                 upgradeAmt.SetText($"{skill.GetLevel()} / {skill.GetMaxLevel()}");
             }
-            upgradeAmt.SetText(skill.GetLevel().ToString());
+            //upgradeAmt.SetText(skill.GetLevel().ToString());
             upgradeDesc.SetText(skill.GetDescription());
 
             // Make all the buttons do something:
