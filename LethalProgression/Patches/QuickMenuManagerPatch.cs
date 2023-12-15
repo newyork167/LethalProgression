@@ -83,7 +83,11 @@ namespace LethalProgression.Patches
 
                 _xpBar.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 _xpBar.transform.Translate(-2f, 1f, 0f);
-                _xpBar.transform.Translate(0.2f, -0.4f, 0f);
+                
+                if (LethalPlugin.Instance.Ultrawide)
+                {
+                    _xpBar.transform.Translate(0.2f, -0.4f, 0f);
+                }
             }
 
             if (!_xpBarProgress)
@@ -97,10 +101,12 @@ namespace LethalProgression.Patches
                 _xpBarProgress.GetComponent<Image>().fillAmount = 0f;
                 _xpBarProgress.transform.localScale = new Vector3(0.597f, 5.21f, 1f);
                 _xpBarProgress.transform.Translate(-0.8f, 0.2f, 0f);
-                
-                // TODO(newyork167): Check if ultrawide before translating.
-                _xpBarProgress.transform.Translate(0.23f, -0.55f, 0f);
-                
+
+                if (LethalPlugin.Instance.Ultrawide)
+                {
+                    _xpBarProgress.transform.Translate(0.23f, -0.55f, 0f);
+                }
+
                 Vector3 pos = _xpBarProgress.transform.localPosition;
 
                 _xpBarProgress.transform.localPosition = new Vector3(pos.x + 7, pos.y - 3.5f, 0f);
@@ -116,8 +122,10 @@ namespace LethalProgression.Patches
                 _xpText.color = new Color(1f, 0.6f, 0f, 1f);
                 _xpText.transform.Translate(-0.75f, 0.21f, 0f);
                 
-                // TODO(newyork167): Check if ultrawide before translating.
-                _xpText.transform.Translate(-0, -0.8f, 0f);
+                if (LethalPlugin.Instance.Ultrawide)
+                {
+                    _xpText.transform.Translate(-0, -0.06f, 0f);
+                }
 
                 ////// Level Text /////
                 _xpLevel = GameObject.Instantiate(_gameXPText).GetComponent<TextMeshProUGUI>();
@@ -165,10 +173,12 @@ namespace LethalProgression.Patches
             skillTreeButton.GetComponentInChildren<TextMeshProUGUI>().text = "> Skills";
 
             skillTreeButton.transform.Translate(0.7f, 1.1f, 0f);
-            
-            // TODO(newyork167): Check if ultrawide before translating.
-            // Also make this more math, right now specific to 3440x1440.
-            skillTreeButton.transform.Translate(-1.1f, -0.96f, 0f);
+
+            if (LethalPlugin.Instance.Ultrawide)
+            {
+                // TODO(newyork167): make this more math, right now specific to 3440x1440.
+                skillTreeButton.transform.Translate(-0.7f, -0.96f, 0f);
+            }
 
             // Change the onClick event to our own.
             skillTreeButton.GetComponent<Button>().onClick = new Button.ButtonClickedEvent();

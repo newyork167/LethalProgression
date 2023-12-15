@@ -25,16 +25,6 @@ namespace LethalProgression.Skills
             {
                 Console.WriteLine($"Component: {component}");
             }
-
-            var skillsObject = GameObject.Find("Systems/UI/Canvas/QuickMenu/MainButtons/Skills");
-            if (skillsObject)
-            {
-                var position = skillsObject.transform.position;
-                LethalPlugin.Log.LogInfo($"skillsObject.transform = {position.ToString()}");
-                LethalPlugin.Log.LogInfo("Dropping transform.y by -.01");
-                position = new Vector3(position.x, position.y - .01f, position.z);
-                skillsObject.transform.position = position;
-            }
         }
     }
 }

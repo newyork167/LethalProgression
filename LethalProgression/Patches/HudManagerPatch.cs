@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 namespace LethalProgression.Patches
 {
@@ -43,17 +45,40 @@ namespace LethalProgression.Patches
         //     return true;
         // }
 
-        [HarmonyPrefix]
-        [HarmonyPatch(typeof(HUDManager), "PingScan_performed")]
-        private static void OnScan(HUDManager __instance, InputAction.CallbackContext context)
-        {
-            GameObject ship = GameObject.Find("/Environment/HangarShip");
-            Console.WriteLine($"Ship position: {ship.transform.position}");
-            foreach (var component in ship.gameObject.GetComponents(typeof(GameObject)))
-            {
-                Console.WriteLine($"Component: {component}");
-            }
-        }
+        // [HarmonyPrefix]
+        // [HarmonyPatch(typeof(HUDManager), "PingScan_performed")]
+        // private static void OnScan(HUDManager __instance, InputAction.CallbackContext context)
+        // {
+        //     var startOfRound = GameObject.FindObjectOfType<StartOfRound>();
+        //     GameObject ship = GameObject.Find("/Environment/HangarShip");
+        //     Console.WriteLine($"Ship position: {ship.transform.position}");
+        //     foreach (var component in ship.gameObject.GetComponents(typeof(GameObject)))
+        //     {
+        //         Console.WriteLine($"Component: {component}");
+        //     }
+        //
+        //     if (UnityEngine.InputSystem.Keyboard.current[Key.LeftShift].isPressed)
+        //     {
+        //         GameObject.FindObjectOfType<StartOfRound>().ManuallyEjectPlayersServerRpc();
+        //         
+        //         LethalPlugin.Log.LogInfo("Firing players out of ship");
+        //         
+        //         startOfRound.suckingPlayersOutOfShip = true;
+        //         startOfRound.suckingFurnitureOutOfShip = true;
+        //         startOfRound.firingPlayersCutsceneRunning = true;
+        //         
+        //         PlaceableShipObject[] array = GameObject.FindObjectsOfType<PlaceableShipObject>();
+        //         for (int i = 0; i < array.Length; i++)
+        //         {
+        //             if (array[i].parentObject == null)
+        //             {
+        //                 
+        //                 Debug.Log("Error! No parentObject for placeable object: " + startOfRound.unlockablesList.unlockables[array[i].unlockableID].unlockableName);
+        //             }
+        //             array[i].parentObject.StartSuckingOutOfShip();
+        //         }
+        //     }
+        // }
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(HUDManager), "AddNewScrapFoundToDisplay")]

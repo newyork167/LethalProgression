@@ -33,6 +33,7 @@ namespace LethalProgression
 
         internal static ManualLogSource Log;
         internal static bool ReservedSlots;
+        internal bool Ultrawide;
         public static LethalPlugin Instance { get; private set; }
 
         private void Awake()
@@ -50,6 +51,13 @@ namespace LethalProgression
 
             foreach (var plugin in Chainloader.PluginInfos)
             {
+                // Log.LogInfo($"Plugin: {plugin.Value.Metadata.Name} {plugin.Value.Metadata.Version} loaded!");
+                // Check if ultrawide to scale/position UI elements correctly
+                if (plugin.Value.Metadata.GUID.IndexOf("LCUltrawide") >= 0)
+                {
+                    Ultrawide = true;
+                }
+                
                 if (plugin.Value.Metadata.GUID.IndexOf("ReservedItem") >= 0)
                 {
                     ReservedSlots = true;

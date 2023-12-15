@@ -1,6 +1,7 @@
 ﻿$solution_dir = $args[0]
 $dll_build = "$solution_dir\LethalProgression\bin\Debug\netstandard2.1\LethalProgression.dll" 
 
+$thunderstore_plugins = "$Env:USERPROFILE\AppData\Roaming\Thunderstore Mod Manager\DataFolder\LethalCompany\profiles\Modding\BepInEx\plugins"
 $thunderstore_plugins = "$Env:USERPROFILE\AppData\Roaming\Thunderstore Mod Manager\DataFolder\LethalCompany\profiles\Discord\BepInEx\plugins"
 $lethal_progression_plugin_folder = "$thunderstore_plugins\lethal-progression"
 
